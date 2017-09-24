@@ -1,0 +1,47 @@
+<html>
+
+<head>
+	<title>Note Pro</title>
+	<link rel="stylesheet" href="/css/main.css">
+</head>
+
+<body>
+	<div class="wrapper">
+		<header class="header-bar">
+			<button>Create new Note</button>
+			<select class="style-selector">
+				<option>BlackWhite-Style</option>
+				<option>BlackOrange-Style</option>
+			</select>
+		</header>
+		<section class="notes">
+			<nav class="navbar">
+				<button>By finish Date</button>
+				<button>By created Date</button>
+				<button>By Importance</button>
+
+				<button class="btn-show-finished">Show finished</button>
+			</nav>
+			<article class="note">
+				<div class="note-header">
+					<div class="note-dodate">Nächsten Mittwoch</div>
+					<div>CAS FEE Selbststudium / Projekt Aufgaben erstellen</div>
+				</div>
+				<div class="note-header">
+					<div class="note-checkbox">
+						<input id="bx-done" type="checkbox">
+						<label for="bx-done">Finished</label>
+					</div>
+					<textarea class="expandable" rows="1" cols="10"></textarea>
+					<button class="btn-expand">expand</button>
+					<button class="btn-edit">edit</button>
+				</div>
+			</article>
+		</section>
+	</div>
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+	<script src="/js/main.js"></script>
+
+</body>
+
+</html>

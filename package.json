@@ -1,0 +1,20 @@
+{
+  "name": "cas-fee_projekt_1",
+  "version": "1.0.0",
+  "description": "Projekt 1 - Notes App",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TheMen4ce/cas-fee_01.git"
+  },
+  "author": "Dennis Briner",
+  "license": "MIT",
+  "homepage": "https://github.com/TheMen4ce/cas-fee_01",
+  "dependencies": {
+    "serve": "^6.1.0",
+    "jquery": "^3.2.1"
+  },
+  "scripts": {
+    "start": "node index.js"
+  }
+}

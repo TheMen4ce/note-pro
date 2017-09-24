@@ -1,0 +1,99 @@
+/*
+    Layout
+*/
+.wrapper {
+    display: flex;
+    flex-flow: row wrap;
+  }
+
+.wrapper > * {
+    padding: 10px;
+    flex: 1 100%;
+}
+
+header {
+    background: tomato;
+}
+
+.notes {
+    text-align: left;
+    background: deepskyblue;
+}
+
+nav {
+    background: gold;
+}
+
+/*
+    General
+*/
+button {
+    box-shadow: 3px 3px 3px;
+}
+
+/*
+    Headerbar
+*/
+.style-selector{
+    float: right;
+}
+
+/*
+    Navbar
+*/
+.btn-show-finished{
+    float: right;
+}
+
+/*
+    Notes
+*/
+.note {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.note-header {
+    display: flex;
+    flex-direction: row;
+}
+
+.note-dodate{
+    width: 20%;
+}
+
+.note-checkbox{
+    width: 20%;
+}
+
+textarea {
+    height: 2em;
+    width: 60%;
+}
+
+.expanded {
+    height: 8em;
+    transition: all 1s;
+}
+
+* {
+    border: 1px solid black;
+}
+
+/*
+    Media Queries
+*/
+
+@media all and (min-width: 800px) {
+    .notes { flex: 2 0px; }
+    
+    .notes { order: 1; }
+    .footer  { order: 2; }
+}
+
+@media screen and (max-width: 600px) {
+    .note-header{
+        flex-direction: column;    
+    }
+}
