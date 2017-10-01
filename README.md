@@ -1,7 +1,7 @@
 # Notes Pro
 
 * *Datum*: 24. September 2017
-* *Dozent*: [Dennis Briner](https://github.com/TheMen4ce)
+* *Author:* [Dennis Briner](https://github.com/TheMen4ce)
 
 Projekt 1 des CAS FEE.
 
