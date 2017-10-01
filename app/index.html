@@ -2,6 +2,7 @@
 
 <head>
 	<title>Note Pro</title>
+	<meta charset=utf-8 />
 	<link rel="stylesheet" href="/css/main.css">
 </head>
 
@@ -14,18 +15,20 @@
 				<option>BlackOrange-Style</option>
 			</select>
 		</header>
-		<section class="notes">
-			<nav class="navbar">
-				<button>By finish Date</button>
-				<button>By created Date</button>
-				<button>By Importance</button>
+		<nav class="navbar">
+			<button>By finish Date</button>
+			<button>By created Date</button>
+			<button>By Importance</button>
 
-				<button class="btn-show-finished">Show finished</button>
-			</nav>
+			<button class="btn-show-finished">Show finished</button>
+		</nav>
+		<section class="notes">
 			<article class="note">
 				<div class="note-header">
 					<div class="note-dodate">Nächsten Mittwoch</div>
-					<div>CAS FEE Selbststudium / Projekt Aufgaben erstellen</div>
+					<div>CAS FEE Selbststudium / Projekt Aufgaben erstellen
+						<span class="btn-expand"></span>
+					</div>
 				</div>
 				<div class="note-header">
 					<div class="note-checkbox">
@@ -33,7 +36,22 @@
 						<label for="bx-done">Finished</label>
 					</div>
 					<textarea class="expandable" rows="1" cols="10"></textarea>
-					<button class="btn-expand">expand</button>
+					<button class="btn-edit">edit</button>
+				</div>
+			</article>
+			<article class="note">
+				<div class="note-header">
+					<div class="note-dodate">Nächsten Mittwoch</div>
+					<div>CAS FEE Selbststudium / Projekt Aufgaben erstellen</div>
+					<span class="btn-expand"></span>
+				</div>
+				<div class="note-header">
+					<div class="note-checkbox">
+						<input id="bx-done" type="checkbox">
+						<label for="bx-done">Finished</label>
+					</div>
+					<textarea class="expandable" rows="1" cols="10"></textarea>
+					
 					<button class="btn-edit">edit</button>
 				</div>
 			</article>

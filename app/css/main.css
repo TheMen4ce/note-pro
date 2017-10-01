@@ -2,13 +2,13 @@
     Layout
 */
 .wrapper {
+    height: 100%;
     display: flex;
-    flex-flow: row wrap;
+    flex-direction: column;
   }
 
 .wrapper > * {
     padding: 10px;
-    flex: 1 100%;
 }
 
 header {
@@ -17,6 +17,7 @@ header {
 
 .notes {
     text-align: left;
+    overflow-y: auto;
     background: deepskyblue;
 }
 
@@ -59,6 +60,18 @@ button {
     flex-direction: row;
 }
 
+.btn-expand:before{
+    content: "▶";
+}
+
+.btn-expand:active{
+    background-color: black;
+}
+
+.btn-expand.clicked:before{
+    content: "▼";
+}
+
 .note-dodate{
     width: 20%;
 }
@@ -73,12 +86,12 @@ textarea {
 }
 
 .expanded {
-    height: 8em;
+    height: 18em;
     transition: all 1s;
 }
 
 * {
-    border: 1px solid black;
+    /* border: 1px solid black; */
 }
 
 /*

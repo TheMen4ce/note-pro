@@ -12,6 +12,7 @@
   "homepage": "https://github.com/TheMen4ce/cas-fee_01",
   "dependencies": {
     "serve": "^6.1.0",
+    "handlebars": "^4.0.10",
     "jquery": "^3.2.1"
   },
   "scripts": {

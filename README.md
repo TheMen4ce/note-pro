@@ -25,3 +25,7 @@ npm start
 ```
 
 Im Browser unter http://localhost:3000 erreichbar.
+
+## Notes
+
+http://jsfiddle.net/496c9/ star toggler
