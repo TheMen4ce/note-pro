@@ -1,0 +1,13 @@
+header{
+    background: #b4004e;
+}
+
+header.header-bar {}
+
+nav {
+    background: #EC407A;
+}
+
+.btn-create, .btn-edit {
+    background: #EC407A;
+}

@@ -4,16 +4,18 @@
 	<title>Note Pro</title>
 	<meta charset=utf-8 />
 	<link rel="stylesheet" href="/css/main.css">
-	<link rel="stylesheet" href="/css/style/black-white.css" id="style-css">
+	<link rel="stylesheet" href="/css/style/pink.css" id="style-css">
+	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 </head>
 
 <body>
 	<div class="wrapper">
 		<header class="header-bar">
-			<button>Create new Note</button>
+			<div class="title">Note Pro</div>
+			<button class="btn-create">+</button>
 			<select class="style-selector">
-				<option value="black-white">BlackWhite-Style</option>
-				<option value="black-orange">BlackOrange-Style</option>
+				<option value="pink">Pink-Style</option>
+				<option value="blue">Blue-Style</option>
 			</select>
 		</header>
 		<nav class="navbar">
@@ -37,7 +39,7 @@
 						<label for="bx-done">Finished</label>
 					</div>
 					<textarea class="expandable" rows="1" cols="10"></textarea>
-					<button class="btn-edit">edit</button>
+					<button class="btn-edit">✎</button>
 				</div>
 			</article>
 			<article class="note">
@@ -53,7 +55,7 @@
 					</div>
 					<textarea class="expandable" rows="1" cols="10"></textarea>
 					
-					<button class="btn-edit">edit</button>
+					<button class="btn-edit">✎</button>
 				</div>
 			</article>
 		</section>

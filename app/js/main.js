@@ -1,6 +1,19 @@
+'use strict';
+
+function init(){
+    if(localStorage.style){
+        changeStyle(localStorage.style);
+    }
+}
+init();
+
+function changeStyle(style){
+    $('#style-css').attr('href','/css/style/'+style+'.css');
+    localStorage.style = style;
+}
+
 $('.style-selector').change(function(){
-    let stylesrc = '/css/style/'+$(this).val()+'.css';
-    $('#style-css').attr('href',stylesrc);
+    changeStyle($(this).val());
 })
 
 $('.btn-expand').click(function (btn) {
