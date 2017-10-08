@@ -3,6 +3,7 @@
 */
 body{
     font-family: 'Roboto', sans-serif;
+    margin:0;
 }
 
 .wrapper {
@@ -19,6 +20,7 @@ body{
 .notes {
     text-align: left;
     overflow-y: auto;
+    padding-bottom: 30px;
 }
 
 /*
@@ -28,7 +30,6 @@ body{
     font-size: 24px;
     margin: 0 auto;
     display: inline-block;
-    /* line-height: 0; */
 }
 
 button, select {
@@ -49,6 +50,8 @@ button, select {
     width: 56px;
     height: 56px;
     font-size: 28px;
+    color: #ffffff;
+    float: right;
 }
 
 .btn-create{
@@ -79,17 +82,46 @@ header{
     Notes
 */
 .note {
+    display: grid;
     margin: 20px;
     padding: 10px;
-    display: flex;
     flex-direction: column;
     box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
     background: #ffffff;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 2em 3em 1fr 19px;
+    grid-template-areas: 
+      "dodate rating"
+      "title title"
+      "content content"
+      "button button";
 }
 
-.note-header {
-    display: flex;
-    flex-direction: row;
+.note > * {
+    margin: 3px 0 3px 0;
+}
+
+.note-dodate{
+    grid-area: dodate;
+}
+
+.note-rating{
+    grid-area: rating;
+    text-align: right;
+    direction: rtl;
+}
+
+.note-title{
+    grid-area: title;
+    align-self: center;
+}
+
+.note-content{
+    grid-area: content;
+}
+
+.note-button{
+    grid-area: button;
 }
 
 .btn-expand:before{
@@ -104,12 +136,31 @@ header{
     content: "▼";
 }
 
-.note-dodate{
-    width: 20%;
+.note-text{
+    width: 100%;
 }
 
 .note-checkbox{
     width: 20%;
+}
+
+.rating{
+    font-style: normal;
+    font-size: x-large;
+    cursor: pointer;
+}
+
+.rating-on::before  {
+    content: "★";
+}
+
+.rating-off::before{
+    content: "☆";
+}
+
+.rating-off:hover::before,
+.rating-off:hover ~ .rating::before{
+    content: "★";
 }
 
 textarea {
@@ -134,6 +185,18 @@ textarea {
 }
 
 @media screen and (max-width: 600px) {
+    .note {
+        margin: 0 0 10px 0;
+        grid-template-columns: 1fr;
+        grid-template-rows: 2em 2em 2em 1fr 19px;
+        grid-template-areas: 
+          "dodate"
+          "rating"
+          "title"
+          "content"
+          "button";
+    }
+    
     .note-header{
         flex-direction: column;    
     }

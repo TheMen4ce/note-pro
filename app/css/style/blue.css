@@ -1,12 +1,24 @@
 header{
-    background: #0288d1;
-    
+    background: #0288d1;   
 }
 
 nav {
     background: #5eb8ff;
 }
 
+.rating-on {
+    color: #0288d1;
+}
+
+.rating-off:hover,
+.rating-off:hover ~ .rating {
+    color: #64c9ff; 
+}
+
 .btn-create, .btn-edit {
     background: #5eb8ff;
+}
+
+.btn-create:hover, .btn-edit:hover {
+    background: #0288d1;
 }

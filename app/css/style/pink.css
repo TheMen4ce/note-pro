@@ -2,7 +2,14 @@ header{
     background: #b4004e;
 }
 
-header.header-bar {}
+.rating-on {
+    color: #b4004e;
+}
+
+.rating-off:hover,
+.rating-off:hover ~ .rating {
+    color: #f88ab0; 
+}
 
 nav {
     background: #EC407A;
@@ -10,4 +17,8 @@ nav {
 
 .btn-create, .btn-edit {
     background: #EC407A;
+}
+
+.btn-create:hover, .btn-edit:hover {
+    background: #b4004e;
 }
