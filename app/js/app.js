@@ -48,14 +48,15 @@ function init() {
             }
         };
         localStorage.notePro = JSON.stringify(notePro);
-    }else{
+    } else {
         notePro = JSON.parse(localStorage.notePro);
     }
-    
+
     changeStyle(notePro.config.style);
     document.getElementById('style-selector').value = notePro.config.style;
-    
-    sortBy('importance');
+    document.getElementById("btn-sort-" + notePro.config.sort).className = 'active';
+    if(notePro.config.showFinished) document.getElementById("btn-showFinished").className += ' active';
+    updateVm();
 }
 init();
 
@@ -68,15 +69,25 @@ $('#style-selector').change(function () {
     changeStyle($(this).val());
 })
 
-function sortBy(sortType) {
-    notesVm = notesDb.sort((a, b) => {
-        return a[sortType] < b[sortType];
+function updateVm() {
+    notesVm = notePro.config.showFinished ? notesDb : notesDb.filter((note) => { return !note.finished; });
+    notesVm = notesVm.sort((a, b) => {
+        return a[notePro.config.sortType] < b[notePro.config.sortType];
     });
-    
-    document.getElementById("btn-sort-"+notePro.config.sort).className = '';
-    notePro.config.sort = sortType;
-    document.getElementById("btn-sort-"+sortType).className = 'active';
     render();
+}
+
+function toggleShowFinished(){
+    notePro.config.showFinished = !notePro.config.showFinished;
+    document.getElementById("btn-showFinished").classList.toggle('active');
+    updateVm();
+}
+
+function sortBy(sortType) {
+    document.getElementById("btn-sort-" + notePro.config.sort).className = '';
+    notePro.config.sort = sortType;
+    document.getElementById("btn-sort-" + sortType).className = 'active';
+    updateVm();
 }
 
 function rate(noteId, importance) {
