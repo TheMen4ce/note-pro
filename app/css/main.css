@@ -43,6 +43,7 @@ button, select {
     height: 36px;
     text-transform: uppercase;
     text-align: center;
+    width: 125px;
 }
 
 .btn-create, .btn-edit{

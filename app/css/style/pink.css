@@ -15,10 +15,18 @@ nav {
     background: #EC407A;
 }
 
-.btn-create, .btn-edit {
+.btn-create {
+    background: #b4004e;
+}
+
+.btn-create:hover{
     background: #EC407A;
 }
 
-.btn-create:hover, .btn-edit:hover {
+.btn-edit {
+    background: #EC407A;
+}
+
+.btn-edit:hover {
     background: #b4004e;
 }

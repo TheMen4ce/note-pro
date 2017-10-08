@@ -15,10 +15,18 @@ nav {
     color: #64c9ff; 
 }
 
-.btn-create, .btn-edit {
+.btn-edit {
     background: #5eb8ff;
 }
 
-.btn-create:hover, .btn-edit:hover {
+.btn-edit:hover {
     background: #0288d1;
+}
+
+.btn-create{
+    background: #0288d1;
+}
+
+.btn-create:hover{
+    background: #5eb8ff;
 }
