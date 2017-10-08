@@ -1,3 +1,8 @@
+"use strict"
+
+/**
+ * TEMP DB
+ */
 var notesDb = [
     {
         id: 1,
@@ -5,7 +10,7 @@ var notesDb = [
         importance: 1,
         title: "Das ist der Title",
         content: "Sali s'eint, sali s'ander, fertig lustig!",
-        finishDate: new Date(2017, 10, 09),
+        finishDate: new Date(2017, 10, 9),
         createdDate: new Date()
     },
     {
@@ -28,10 +33,49 @@ var notesDb = [
     }
 ];
 
+/**
+ * TEMP GLOBALS
+ */
+var notePro;
+var notesVm;
+function init() {
+    if (!localStorage.notePro) {
+        notePro = {
+            config: {
+                style: 'pink',
+                sort: 'importance',
+                showFinished: true
+            }
+        };
+        localStorage.notePro = JSON.stringify(notePro);
+    }else{
+        notePro = JSON.parse(localStorage.notePro);
+    }
+    
+    changeStyle(notePro.config.style);
+    document.getElementById('style-selector').value = notePro.config.style;
+    
+    sortBy('importance');
+}
+init();
+
+function changeStyle(style) {
+    $('#style-css').attr('href', '/css/style/' + style + '.css');
+    notePro.config.style = style;
+}
+
+$('#style-selector').change(function () {
+    changeStyle($(this).val());
+})
+
 function sortBy(sortType) {
     notesVm = notesDb.sort((a, b) => {
         return a[sortType] < b[sortType];
     });
+    
+    document.getElementById("btn-sort-"+notePro.config.sort).className = '';
+    notePro.config.sort = sortType;
+    document.getElementById("btn-sort-"+sortType).className = 'active';
     render();
 }
 
@@ -52,6 +96,3 @@ function render() {
     let notesHtml = Handlebars.compile(notesTemplateText);
     document.getElementById('notes-content').innerHTML = notesHtml({ notes: notesVm });
 }
-
-var notesVm;
-sortBy('importance');
