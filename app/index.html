@@ -6,6 +6,51 @@
 	<link rel="stylesheet" href="/css/main.css">
 	<link rel="stylesheet" href="/css/style/pink.css" id="style-css">
 	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"></script>
+	<script>
+		Handlebars.registerHelper('dateFormat', function (date) {
+			return moment(date).fromNow();
+		});
+
+		Handlebars.registerHelper('rating', function (id, rating) {
+			let ratingHtml = "";
+			for (let i = 5; i > 0; i--) {
+				ratingHtml += i <= rating ? getRatingHtml('on',id,i) : getRatingHtml('off',id,i);
+			}
+			return ratingHtml;
+		});
+
+		function getRatingHtml(type, noteId, rate){
+			return "<i class='rating rating-"+type+"' onclick='rate(" + noteId + "," + rate + ")'></i>"
+		}
+	</script>
+	<script id='notesTemplate' type='text/x-handlebars-template'> 
+			{{#each notes}}
+			<article class="note">
+				<div class="note-dodate">
+					<div>{{#dateFormat doDate}}{{/dateFormat}}</div>
+					<div class="note-finished">
+				<input id="bx-done" type="checkbox">
+				<label for="bx-done">Finished</label>
+			</div>
+		</div>
+		<div class="note-rating">
+			{{#rating id rating}}{{/rating}}
+		</div>
+		<div class="note-title">{{title}}
+			<span class="btn-expand"></span>
+		</div>
+		<div class="note-content">
+			<textarea class="note-text" rows="1" cols="10">{{content}}</textarea>
+		</div>
+		<div class="note-button">
+			<button class="btn-edit">✎</button>
+		</div>
+	</article>
+	{{/each}}
+</script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
 </head>
 
 <body>
@@ -25,37 +70,12 @@
 
 			<button class="btn-show-finished">Show finished</button>
 		</nav>
-		<section class="notes">
-			<article class="note">
-				<div class="note-dodate">
-					<div>Nächsten Mittwoch</div>
-					<div class="note-finished">
-						<input id="bx-done" type="checkbox">
-						<label for="bx-done">Finished</label>
-					</div>
-				</div>
-				<div class="note-rating">
-					<i class="rating rating-off"></i>
-					<i class="rating rating-off"></i>
-					<i class="rating rating-off"></i>
-					<i class="rating rating-on"></i>
-					<i class="rating rating-on"></i>
-				</div>
-				<div class="note-title">CAS FEE Selbststudium / Projekt Aufgaben erstellen
-					<span class="btn-expand"></span>
-				</div>
-				<div class="note-content">
-					<textarea class="note-text" rows="1" cols="10"></textarea>
-				</div>
-				<div class="note-button">
-					<button class="btn-edit">✎</button>
-				</div>
-			</article>
+		<section id="notes-content" class="notes">
 		</section>
 	</div>
 	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-	<script src="/js/animation.js"></script>
 	<script src="/js/app.js"></script>
+	<script src="/js/animation.js"></script>
 </body>
 
 </html>

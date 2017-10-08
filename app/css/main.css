@@ -83,7 +83,7 @@ header{
 */
 .note {
     display: grid;
-    margin: 20px;
+    margin: 20px 20px 40px 20px;
     padding: 10px;
     flex-direction: column;
     box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
@@ -158,8 +158,8 @@ header{
     content: "☆";
 }
 
-.rating-off:hover::before,
-.rating-off:hover ~ .rating::before{
+.rating:hover::before,
+.rating:hover ~ .rating::before{
     content: "★";
 }
 
@@ -179,14 +179,13 @@ textarea {
 
 @media all and (min-width: 800px) {
     .notes { flex: 2 0px; }
-    
     .notes { order: 1; }
     .footer  { order: 2; }
 }
 
 @media screen and (max-width: 600px) {
     .note {
-        margin: 0 0 10px 0;
+        margin: 0 0 40px 0;
         grid-template-columns: 1fr;
         grid-template-rows: 2em 2em 2em 1fr 19px;
         grid-template-areas: 

@@ -10,8 +10,8 @@ nav {
     color: #0288d1;
 }
 
-.rating-off:hover,
-.rating-off:hover ~ .rating {
+.rating:hover,
+.rating:hover ~ .rating {
     color: #64c9ff; 
 }
 

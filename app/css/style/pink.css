@@ -6,8 +6,8 @@ header{
     color: #b4004e;
 }
 
-.rating-off:hover,
-.rating-off:hover ~ .rating {
+.rating:hover,
+.rating:hover ~ .rating {
     color: #f88ab0; 
 }
 
