@@ -6,12 +6,12 @@ nav {
     background: #5eb8ff;
 }
 
-.rating-on {
+.importance-on {
     color: #0288d1;
 }
 
-.rating:hover,
-.rating:hover ~ .rating {
+.importance:hover,
+.importance:hover ~ .importance {
     color: #64c9ff; 
 }
 

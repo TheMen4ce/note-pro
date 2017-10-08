@@ -1,19 +1,31 @@
 'use strict';
 
-function init(){
-    if(localStorage.style){
-        changeStyle(localStorage.style);
-        $('.style-selector').val(localStorage.style);
+var notePro;
+function init() {
+    if (!localStorage.notePro) {
+        notePro = {
+            config: {
+                style: 'pink',
+                sort: 'importance',
+                showFinished: true
+            }
+        };
+        localStorage.notePro = JSON.stringify(notePro);
+    }else{
+        notePro = JSON.parse(localStorage.notePro);
     }
+
+    changeStyle(notePro.config.style);
+    document.getElementById('style-selector').value = notePro.config.style;
 }
 init();
 
-function changeStyle(style){
-    $('#style-css').attr('href','/css/style/'+style+'.css');
-    localStorage.style = style;
+function changeStyle(style) {
+    $('#style-css').attr('href', '/css/style/' + style + '.css');
+    notePro.config.style = style;
 }
 
-$('.style-selector').change(function(){
+$('#style-selector').change(function () {
     changeStyle($(this).val());
 })
 

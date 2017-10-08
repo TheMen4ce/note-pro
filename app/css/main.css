@@ -92,7 +92,7 @@ header{
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 2em 3em 1fr 19px;
     grid-template-areas: 
-      "dodate rating"
+      "finishdate importance"
       "title title"
       "content content"
       "button button";
@@ -102,12 +102,12 @@ header{
     margin: 3px 0 3px 0;
 }
 
-.note-dodate{
-    grid-area: dodate;
+.note-finishdate{
+    grid-area: finishdate;
 }
 
-.note-rating{
-    grid-area: rating;
+.note-importance{
+    grid-area: importance;
     text-align: right;
     direction: rtl;
 }
@@ -145,22 +145,22 @@ header{
     width: 20%;
 }
 
-.rating{
+.importance{
     font-style: normal;
     font-size: x-large;
     cursor: pointer;
 }
 
-.rating-on::before  {
+.importance-on::before  {
     content: "★";
 }
 
-.rating-off::before{
+.importance-off::before{
     content: "☆";
 }
 
-.rating:hover::before,
-.rating:hover ~ .rating::before{
+.importance:hover::before,
+.importance:hover ~ .importance::before{
     content: "★";
 }
 
@@ -190,8 +190,8 @@ textarea {
         grid-template-columns: 1fr;
         grid-template-rows: 2em 2em 2em 1fr 19px;
         grid-template-areas: 
-          "dodate"
-          "rating"
+          "finishdate"
+          "importance"
           "title"
           "content"
           "button";

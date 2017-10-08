@@ -2,12 +2,12 @@ header{
     background: #b4004e;
 }
 
-.rating-on {
+.importance-on {
     color: #b4004e;
 }
 
-.rating:hover,
-.rating:hover ~ .rating {
+.importance:hover,
+.importance:hover ~ .importance {
     color: #f88ab0; 
 }
 
