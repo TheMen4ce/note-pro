@@ -45,7 +45,8 @@ function init() {
                 style: 'pink',
                 sort: 'importance',
                 showFinished: true
-            }
+            },
+            notes: notesDb
         };
         localStorage.notePro = JSON.stringify(notePro);
     } else {
@@ -60,6 +61,10 @@ function init() {
 }
 init();
 
+function saveDb(){
+    localStorage.notePro = JSON.stringify(notePro);
+}
+
 function changeStyle(style) {
     $('#style-css').attr('href', '/css/style/' + style + '.css');
     notePro.config.style = style;
@@ -70,17 +75,25 @@ $('#style-selector').change(function () {
 })
 
 function updateVm() {
-    notesVm = notePro.config.showFinished ? notesDb : notesDb.filter((note) => { return !note.finished; });
+    notesVm = notePro.config.showFinished ? notePro.notes : notePro.notes.filter((note) => { return !note.finished; });
     notesVm = notesVm.sort((a, b) => {
         return a[notePro.config.sortType] < b[notePro.config.sortType];
     });
     render();
 }
 
+function toggleFinished(noteId){
+    let note = findNote(noteId);
+    note.finished = !note.finished;
+    updateVm();
+    saveDb();
+}
+
 function toggleShowFinished(){
     notePro.config.showFinished = !notePro.config.showFinished;
     document.getElementById("btn-showFinished").classList.toggle('active');
     updateVm();
+    saveDb();
 }
 
 function sortBy(sortType) {
@@ -88,16 +101,18 @@ function sortBy(sortType) {
     notePro.config.sort = sortType;
     document.getElementById("btn-sort-" + sortType).className = 'active';
     updateVm();
+    saveDb();
 }
 
 function rate(noteId, importance) {
     let note = findNote(noteId);
     note.importance = importance;
     render();
+    saveDb();
 }
 
 function findNote(noteId) {
-    return notesDb.find((note) => {
+    return notePro.notes.find((note) => {
         return note.id == noteId;
     })
 }
