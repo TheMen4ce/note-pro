@@ -48,7 +48,7 @@
 				<textarea class="note-text" rows="1" cols="10">{{content}}</textarea>
 			</div>
 			<div class="note-button">
-				<button class="btn-edit">✎</button>
+				<button class="btn-edit" data-note-id="{{id}}">✎</button>
 			</div>
 		</article>
 		{{/each}}
@@ -60,7 +60,7 @@
 	<div class="wrapper">
 		<header class="header-bar">
 			<div class="title">Note Pro</div>
-			<button class="btn-create">+</button>
+			<button id="btn-create" class="btn-create">+</button>
 			<select id="style-selector" class="style-selector">
 				<option value="pink">Pink-Style</option>
 				<option value="blue">Blue-Style</option>

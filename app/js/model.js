@@ -1,4 +1,4 @@
-import {default as notesDb} from './data.js'
+import {default as notesDb} from "./data.js"
 
 const notes = notesDb.getAllNotes();
 let config = notesDb.getConfig();
@@ -90,6 +90,11 @@ function toggleShowFinished(){
     saveConfig();
 }
 
+function createNote(){
+    notes.push(new Note("Created", "tbd"));
+    saveNotes();
+}
+
 export default {
     config: config,
     notes: notes,
@@ -97,5 +102,6 @@ export default {
     toggleShowFinished,
     setStyle,
     setSortType,
-    setImportance
+    setImportance,
+    createNote,
 };
