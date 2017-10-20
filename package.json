@@ -13,8 +13,7 @@
   "dependencies": {
     "serve": "^6.1.0",
     "handlebars": "^4.0.10",
-    "moment": "^2.18.1",
-    "jquery": "^3.2.1"
+    "moment": "^2.18.1"
   },
   "scripts": {
     "start": "node index.js"

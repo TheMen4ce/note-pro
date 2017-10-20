@@ -4,7 +4,7 @@
 	<title>Note Pro</title>
 	<meta charset=utf-8 />
 	<link rel="stylesheet" href="/css/main.css">
-	<link rel="stylesheet" href="/css/style/pink.css" id="style-css">
+	<link rel="stylesheet" id="style-css">
 	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"></script>
@@ -26,7 +26,7 @@
 		});
 
 		function getImportanceHtml(type, noteId, rate) {
-			return "<i class='importance importance-" + type + "' onclick='rate(" + noteId + "," + rate + ")'></i>"
+			return "<i class='importance importance-" + type + "' data-note-id='"+noteId+"' data-rate='"+rate+"'></i>"
 		}
 	</script>
 	<script id='notesTemplate' type='text/x-handlebars-template'> 
@@ -34,7 +34,7 @@
 		<article class="note">
 			<div class="note-finishdate">
 				<span class="bx-finished">
-					<input type="checkbox" data-note-id="{{id}}" {{attr finished 'checked'}}>
+					<input type="checkbox" id="cbx-finished" data-note-id="{{id}}" {{attr finished 'checked'}}>
 				</span>
 				{{dateFormat finishDate}}
 			</div>
@@ -67,16 +67,15 @@
 			</select>
 		</header>
 		<nav class="navbar">
-			<button id="btn-sort-finishDate" onclick="sortBy('finishDate')">By finish Date</button>
-			<button id="btn-sort-createdDate" onclick="sortBy('createdDate')">By created Date</button>
-			<button id="btn-sort-importance" onclick="sortBy('importance')">By Importance</button>
+			<button id="btn-sort-finishDate">By finish Date</button>
+			<button id="btn-sort-createdDate">By created Date</button>
+			<button id="btn-sort-importance">By Importance</button>
 
-			<button id="btn-showFinished" class="btn-show-finished" onclick="toggleShowFinished()">Show finished</button>
+			<button id="btn-showFinished" class="btn-show-finished">Show finished</button>
 		</nav>
 		<section id="notes-content" class="notes">
 		</section>
 	</div>
-	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 	<script type="module" src="js/data.js"></script>
 	<script type="module" src="js/model.js"></script>
 	<script type="module" src="js/app.js"></script>

@@ -5,65 +5,82 @@ import {default as model} from './model.js';
         changeStyle(model.config.style);
         document.getElementById('style-selector').value = model.config.style;
         document.getElementById("btn-sort-" + model.config.sort).className = 'active';
+        document.getElementById('style-selector').addEventListener('change', (event) => changeStyle(event.target.value))
+        document.addEventListener('click', (event) => handleClick(event));
+
         if (model.config.showFinished) document.getElementById("btn-showFinished").className += ' active';
         updateVm();
-
-        $(document).on("click", "input[data-note-id]", handleToggleFinished);
     }
-    init();
+    init();  
 
-    function changeStyle(style) {
-        $('#style-css').attr('href', '/css/style/' + style + '.css');
-        model.config.style = style;
-    }
-
-    $('#style-selector').change(function () {
-        changeStyle($(this).val());
-    })
-
-    function handleToggleFinished(event) {
-        let target = $(event.target);
-        let noteId = Number(target.data("note-id"));
-
-        if (!isNaN(noteId)) {
-            model.toggleFinished(noteId);
-            render();
+    function handleClick(event){
+        switch(event.target.id){
+            case 'cbx-finished': 
+                toggleFinished(event.target.dataset.noteId);
+                break;
+            case 'cbx-finished': 
+                toggleFinished(event.target.dataset.noteId);
+                break;
+            case 'btn-sort-finishDate': 
+                sortBy('finishDate');
+                break;
+            case 'btn-sort-importance': 
+                sortBy('importance');
+                break;
+            case 'btn-sort-createdDate': 
+                sortBy('createdDate');
+                break;
+            case 'btn-showFinished': 
+                toggleShowFinished();
+                break;
+        }
+        if(event.target.classList.contains('importance')){
+            rate(event.target.dataset.noteId, event.target.dataset.rate);
         }
     }
 
-    function updateVm() {
-        model.notes = model.config.showFinished ? model.notes : model.notes.filter((note) => { return !note.finished; });
-        model.notes = model.notes.sort((a, b) => {
-            return a[model.config.sortType] < b[model.config.sortType];
-        });
-        render();
+    function changeStyle(style) {
+        document.getElementById('style-css').setAttribute('href', '/css/style/' + style + '.css');
+        model.setStyle(style);
+    }
+
+    function toggleFinished(noteId) {
+        model.toggleFinished(noteId);
+        render(model.notes);
     }
 
     function toggleShowFinished() {
-        model.config.showFinished = !model.config.showFinished;
+        model.toggleShowFinished();
         document.getElementById("btn-showFinished").classList.toggle('active');
         updateVm();
-        saveDb();
     }
 
     function sortBy(sortType) {
         document.getElementById("btn-sort-" + model.config.sort).className = '';
-        model.config.sort = sortType;
+        model.setSortType(sortType);
         document.getElementById("btn-sort-" + sortType).className = 'active';
         updateVm();
-        saveDb();
     }
 
     function rate(noteId, importance) {
-        let note = findById(noteId);
-        note.importance = importance;
-        render();
-        saveDb();
+        model.setImportance(noteId, importance)
+        render(model.notes);
     }
 
-    function render() {
+    /**
+     * VIEW
+     */
+    function updateVm() {
+        let notesVm = model.config.showFinished ? model.notes : model.notes.filter((note) => { return !note.finished; });
+        notesVm = notesVm.sort((a, b) => {
+            return a[model.config.sort] < b[model.config.sort];
+        });
+        render(notesVm);
+    }
+
+    function render(notesVm) {
         let notesTemplateText = document.getElementById('notesTemplate').textContent;
         let notesHtml = Handlebars.compile(notesTemplateText);
-        document.getElementById('notes-content').innerHTML = notesHtml({ notes: model.notes });
+        document.getElementById('notes-content').innerHTML = notesHtml({ notes: notesVm });
     }
 })();
