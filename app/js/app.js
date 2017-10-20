@@ -1,124 +1,69 @@
-"use strict"
+import {default as model} from './model.js';
 
-/**
- * TEMP DB
- */
-var notesDb = [
-    {
-        id: 1,
-        finished: false,
-        importance: 1,
-        title: "Das ist der Title",
-        content: "Sali s'eint, sali s'ander, fertig lustig!",
-        finishDate: new Date(2017, 10, 9),
-        createdDate: new Date()
-    },
-    {
-        id: 2,
-        finished: true,
-        importance: 3,
-        title: "Am Mami helfe poschtä",
-        content: "Alüte, fräge wies gaht, alli Läde abklappere, etc.",
-        finishDate: new Date(2017, 10, 23),
-        createdDate: new Date()
-    },
-    {
-        id: 3,
-        finished: false,
-        importance: 4,
-        title: "Über d'Strass laufe",
-        content: "Luege, Lose, Laufe! hähä",
-        finishDate: new Date(2017, 12, 13),
-        createdDate: new Date()
+; (function () {
+    function init() {
+        changeStyle(model.config.style);
+        document.getElementById('style-selector').value = model.config.style;
+        document.getElementById("btn-sort-" + model.config.sort).className = 'active';
+        if (model.config.showFinished) document.getElementById("btn-showFinished").className += ' active';
+        updateVm();
+
+        $(document).on("click", "input[data-note-id]", handleToggleFinished);
     }
-];
+    init();
 
-/**
- * TEMP GLOBALS
- */
-var notePro;
-var notesVm;
-function init() {
-    if (!localStorage.notePro) {
-        notePro = {
-            config: {
-                style: 'pink',
-                sort: 'importance',
-                showFinished: true
-            },
-            notes: notesDb
-        };
-        localStorage.notePro = JSON.stringify(notePro);
-    } else {
-        notePro = JSON.parse(localStorage.notePro);
+    function changeStyle(style) {
+        $('#style-css').attr('href', '/css/style/' + style + '.css');
+        model.config.style = style;
     }
 
-    changeStyle(notePro.config.style);
-    document.getElementById('style-selector').value = notePro.config.style;
-    document.getElementById("btn-sort-" + notePro.config.sort).className = 'active';
-    if(notePro.config.showFinished) document.getElementById("btn-showFinished").className += ' active';
-    updateVm();
-}
-init();
-
-function saveDb(){
-    localStorage.notePro = JSON.stringify(notePro);
-}
-
-function changeStyle(style) {
-    $('#style-css').attr('href', '/css/style/' + style + '.css');
-    notePro.config.style = style;
-}
-
-$('#style-selector').change(function () {
-    changeStyle($(this).val());
-})
-
-function updateVm() {
-    notesVm = notePro.config.showFinished ? notePro.notes : notePro.notes.filter((note) => { return !note.finished; });
-    notesVm = notesVm.sort((a, b) => {
-        return a[notePro.config.sortType] < b[notePro.config.sortType];
-    });
-    render();
-}
-
-function toggleFinished(noteId){
-    let note = findNote(noteId);
-    note.finished = !note.finished;
-    updateVm();
-    saveDb();
-}
-
-function toggleShowFinished(){
-    notePro.config.showFinished = !notePro.config.showFinished;
-    document.getElementById("btn-showFinished").classList.toggle('active');
-    updateVm();
-    saveDb();
-}
-
-function sortBy(sortType) {
-    document.getElementById("btn-sort-" + notePro.config.sort).className = '';
-    notePro.config.sort = sortType;
-    document.getElementById("btn-sort-" + sortType).className = 'active';
-    updateVm();
-    saveDb();
-}
-
-function rate(noteId, importance) {
-    let note = findNote(noteId);
-    note.importance = importance;
-    render();
-    saveDb();
-}
-
-function findNote(noteId) {
-    return notePro.notes.find((note) => {
-        return note.id == noteId;
+    $('#style-selector').change(function () {
+        changeStyle($(this).val());
     })
-}
 
-function render() {
-    let notesTemplateText = document.getElementById('notesTemplate').textContent;
-    let notesHtml = Handlebars.compile(notesTemplateText);
-    document.getElementById('notes-content').innerHTML = notesHtml({ notes: notesVm });
-}
+    function handleToggleFinished(event) {
+        let target = $(event.target);
+        let noteId = Number(target.data("note-id"));
+
+        if (!isNaN(noteId)) {
+            model.toggleFinished(noteId);
+            render();
+        }
+    }
+
+    function updateVm() {
+        model.notes = model.config.showFinished ? model.notes : model.notes.filter((note) => { return !note.finished; });
+        model.notes = model.notes.sort((a, b) => {
+            return a[model.config.sortType] < b[model.config.sortType];
+        });
+        render();
+    }
+
+    function toggleShowFinished() {
+        model.config.showFinished = !model.config.showFinished;
+        document.getElementById("btn-showFinished").classList.toggle('active');
+        updateVm();
+        saveDb();
+    }
+
+    function sortBy(sortType) {
+        document.getElementById("btn-sort-" + model.config.sort).className = '';
+        model.config.sort = sortType;
+        document.getElementById("btn-sort-" + sortType).className = 'active';
+        updateVm();
+        saveDb();
+    }
+
+    function rate(noteId, importance) {
+        let note = findById(noteId);
+        note.importance = importance;
+        render();
+        saveDb();
+    }
+
+    function render() {
+        let notesTemplateText = document.getElementById('notesTemplate').textContent;
+        let notesHtml = Handlebars.compile(notesTemplateText);
+        document.getElementById('notes-content').innerHTML = notesHtml({ notes: model.notes });
+    }
+})();
