@@ -3,36 +3,34 @@
 <head>
 	<title>Note Pro</title>
 	<meta charset=utf-8 />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="/css/main.css">
 	<link rel="stylesheet" id="style-css">
 	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+</head>
 
+<body>
+	<div class="wrapper">
+		<header class="header-bar">
+			<div class="title">Note Pro</div>
+			<button id="btn-create" class="btn-create">+</button>
+			<select id="style-selector" class="style-selector">
+				<option value="pink">Pink-Style</option>
+				<option value="blue">Blue-Style</option>
+			</select>
+		</header>
+		<nav class="navbar">
+			<button id="btn-sort-finishDate">By finish Date</button>
+			<button id="btn-sort-createdDate">By created Date</button>
+			<button id="btn-sort-importance">By Importance</button>
+
+			<button id="btn-showFinished" class="btn-show-finished">Show finished</button>
+		</nav>
+		<section id="notes-content" class="notes">
+		</section>
+	</div>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"></script>
-	<script>
-		Handlebars.registerHelper("dateFormat", function (date) {
-			return moment(date).fromNow();
-		});
-
-		Handlebars.registerHelper("dateFormatShort", function (date) {
-			return moment(date).format("YYYY-MM-DD");
-		});
-
-		Handlebars.registerHelper("importance", function (id, importance) {
-			let importanceHtml = "";
-			for (let i = 5; i > 0; i--) {
-				importanceHtml += i <= importance ? getImportanceHtml("on", id, i) : getImportanceHtml("off", id, i);
-			}
-			return importanceHtml;
-		});
-
-		Handlebars.registerHelper("attr", function (setAttr, attr) {
-			return setAttr ? attr : "";
-		});
-
-		function getImportanceHtml(type, noteId, rate) {
-			return `<i class="importance importance-${type}" data-note-id="${noteId}" data-rate="${rate}"></i>`
-		}
-	</script>
+	<script src="js/hbs/helpers.js"></script>
 	<script id="notesTemplate" type="text/x-handlebars-template"> 
 		{{#each notes}}
 		<article class="note note-{{id}}">
@@ -72,28 +70,6 @@
 		{{/each}}
 	</script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
-</head>
-
-<body>
-	<div class="wrapper">
-		<header class="header-bar">
-			<div class="title">Note Pro</div>
-			<button id="btn-create" class="btn-create">+</button>
-			<select id="style-selector" class="style-selector">
-				<option value="pink">Pink-Style</option>
-				<option value="blue">Blue-Style</option>
-			</select>
-		</header>
-		<nav class="navbar">
-			<button id="btn-sort-finishDate">By finish Date</button>
-			<button id="btn-sort-createdDate">By created Date</button>
-			<button id="btn-sort-importance">By Importance</button>
-
-			<button id="btn-showFinished" class="btn-show-finished">Show finished</button>
-		</nav>
-		<section id="notes-content" class="notes">
-		</section>
-	</div>
 	<script type="module" src="js/data.js"></script>
 	<script type="module" src="js/model.js"></script>
 	<script type="module" src="js/app.js"></script>
