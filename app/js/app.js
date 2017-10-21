@@ -36,8 +36,15 @@ import {default as model} from "./model.js";
             case "btn-create": 
                 createNote();
                 break;
+            case "btn-cancel": 
             case "btn-edit": 
-                editNote(event.target.dataset.noteId);
+                toggleEdit(event.target.dataset.noteId);
+                break;
+            case "btn-save": 
+                saveNote(event.target.dataset.noteId);
+                break;
+            case "btn-delete": 
+                deleteNote(event.target.dataset.noteId);
                 break;
         }
         if(event.target.classList.contains("importance")){
@@ -56,6 +63,7 @@ import {default as model} from "./model.js";
     }
 
     function toggleShowFinished() {
+        // TODO: make finished look like: todo 'in for days' and done 'a year ago'
         model.toggleShowFinished();
         document.getElementById("btn-showFinished").classList.toggle("active");
         updateVm();
@@ -73,8 +81,27 @@ import {default as model} from "./model.js";
         render(model.notes);
     }
 
-    function editNote(noteId){
-        
+    function deleteNote(noteId){
+        model.deleteNote(noteId);
+        render(model.notes);
+    }
+
+    function saveNote(noteId){
+        let title = document.querySelector(`.note-${noteId} #note-title`).value;
+        let content = document.querySelector(`.note-${noteId} #note-content`).value;
+        let finishDate = document.querySelector(`.note-${noteId} #note-finishDate`).value;
+        model.saveNote(noteId, title, content, finishDate);
+        toggleEdit(noteId);
+        render(model.notes);
+    }
+
+    function toggleEdit(noteId){
+        toggleHide(noteId, "edit-off");
+        toggleHide(noteId, "edit-on");
+    }
+
+    function toggleHide(noteId, clazz){
+        Array.from(document.querySelectorAll(`.note-${noteId} .${clazz}`), (ele) => ele.classList.toggle('hidden'));
     }
 
     function rate(noteId, importance) {
@@ -88,7 +115,7 @@ import {default as model} from "./model.js";
     function updateVm() {
         let notesVm = model.config.showFinished ? model.notes : model.notes.filter((note) => { return !note.finished; });
         notesVm = notesVm.sort((a, b) => {
-            return a[model.config.sort] < b[model.config.sort];
+            return a[model.config.sort] > b[model.config.sort];
         });
         render(notesVm);
     }

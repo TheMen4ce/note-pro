@@ -95,6 +95,19 @@ function createNote(){
     saveNotes();
 }
 
+function deleteNote(noteId){
+    notes.splice(notes.indexOf(findById(noteId)), 1);
+    saveNotes();    
+}
+
+function saveNote(noteId, title, content, finishDate){
+    let note = findById(noteId);
+    note.title = title;
+    note.content = content;
+    note.finishDate = finishDate;
+    saveNotes();
+}
+
 export default {
     config: config,
     notes: notes,
@@ -104,4 +117,6 @@ export default {
     setSortType,
     setImportance,
     createNote,
+    saveNote,
+    deleteNote
 };

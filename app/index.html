@@ -9,46 +9,64 @@
 
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"></script>
 	<script>
-		Handlebars.registerHelper('dateFormat', function (date) {
+		Handlebars.registerHelper("dateFormat", function (date) {
 			return moment(date).fromNow();
 		});
 
-		Handlebars.registerHelper('importance', function (id, importance) {
+		Handlebars.registerHelper("dateFormatShort", function (date) {
+			return moment(date).format("YYYY-MM-DD");
+		});
+
+		Handlebars.registerHelper("importance", function (id, importance) {
 			let importanceHtml = "";
 			for (let i = 5; i > 0; i--) {
-				importanceHtml += i <= importance ? getImportanceHtml('on', id, i) : getImportanceHtml('off', id, i);
+				importanceHtml += i <= importance ? getImportanceHtml("on", id, i) : getImportanceHtml("off", id, i);
 			}
 			return importanceHtml;
 		});
 
-		Handlebars.registerHelper('attr', function(setAttr, attr) {
-    		return setAttr ? attr : '';
+		Handlebars.registerHelper("attr", function (setAttr, attr) {
+			return setAttr ? attr : "";
 		});
 
 		function getImportanceHtml(type, noteId, rate) {
-			return "<i class='importance importance-" + type + "' data-note-id='"+noteId+"' data-rate='"+rate+"'></i>"
+			return `<i class="importance importance-${type}" data-note-id="${noteId}" data-rate="${rate}"></i>`
 		}
 	</script>
-	<script id='notesTemplate' type='text/x-handlebars-template'> 
+	<script id="notesTemplate" type="text/x-handlebars-template"> 
 		{{#each notes}}
-		<article class="note">
+		<article class="note note-{{id}}">
 			<div class="note-finishdate">
 				<span class="bx-finished">
-					<input type="checkbox" id="cbx-finished" data-note-id="{{id}}" {{attr finished 'checked'}}>
+					<input type="checkbox" id="cbx-finished" data-note-id="{{id}}" {{attr finished "checked"}}>
 				</span>
-				{{dateFormat finishDate}}
+				<span class="edit-off">
+					{{dateFormat finishDate}}
+				</span>
+				<input type="date" id="note-finishDate" class="edit-on hidden" value="{{dateFormatShort finishDate}}">
 			</div>
 			<div class="note-importance">
 				{{#importance id importance}}{{/importance}}
 			</div>
-			<div class="note-title {{attr finished 'strikethrough'}}">{{title}}
-				<span class="btn-expand"></span>
+			<div class="edit-off note-title {{attr finished 'strikethrough'}}">
+				<b>{{title}}</b>
 			</div>
-			<div class="note-content">
-				<textarea class="note-text" rows="1" cols="10">{{content}}</textarea>
+			<div class="edit-on note-title hidden">
+				<input id="note-title" value="{{title}}">
+			</div>
+			<div class="edit-off note-content">
+				{{content}}
+			</div>
+			<div class="edit-on note-content hidden">
+				<textarea id="note-content" class="note-text" rows="3">{{content}}</textarea>
 			</div>
 			<div class="note-button">
-				<button class="btn-edit" data-note-id="{{id}}">✎</button>
+				<button id="btn-edit" class="btn-edit edit-off" data-note-id="{{id}}">✎</button>
+			</div>
+			<div class="note-button">
+				<button id="btn-save" class="btn-edit edit-on hidden" data-note-id="{{id}}">🖫</button>
+				<button id="btn-cancel" class="btn-edit edit-on hidden" data-note-id="{{id}}">✗</button>
+				<button id="btn-delete" class="btn-edit edit-on hidden" data-note-id="{{id}}">🗑</button>
 			</div>
 		</article>
 		{{/each}}
