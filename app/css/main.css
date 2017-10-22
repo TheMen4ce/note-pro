@@ -151,24 +151,8 @@ header{
     grid-area: button;
 }
 
-.btn-expand:before{
-    content: "▶";
-}
-
-.btn-expand:active{
-    background-color: black;
-}
-
-.btn-expand.clicked:before{
-    content: "▼";
-}
-
 .note-text{
     width: 100%;
-}
-
-.note-checkbox{
-    width: 20%;
 }
 
 .importance{
@@ -206,8 +190,8 @@ header{
           "content"
           "button";
     }
-    
-    .note-header{
-        flex-direction: column;    
+
+    .btn-show-finished{
+        float: none;
     }
 }
