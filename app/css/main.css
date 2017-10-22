@@ -20,7 +20,7 @@ body{
 .notes {
     text-align: left;
     overflow-y: auto;
-    padding-bottom: 30px;
+    padding: 20px;
 }
 
 /*
@@ -34,10 +34,6 @@ body{
 
 .strikethrough {
     text-decoration: line-through;
-}
-
-.hidden {
-    display: none;
 }
 
 button:active,
@@ -75,6 +71,7 @@ button, select {
     position: absolute;
     right: 30px;
     bottom: 30px;
+    z-index: 1;
 }
 
 .bx-finished{
@@ -108,9 +105,19 @@ header{
 /*
     Notes
 */
+.notes {
+    flex: 1;
+}
+
+.notes-list{
+    position: relative;
+    list-style: none;
+    padding:0;
+    margin:0;
+}
+
 .note {
     display: grid;
-    margin: 20px 20px 40px 20px;
     padding: 10px;
     flex-direction: column;
     box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
@@ -122,6 +129,10 @@ header{
       "title title"
       "content content"
       "button button";
+
+    position: absolute;
+    width: calc(100% - 20px);
+    transition: transform 2s ease-out
 }
 
 .note > * {
@@ -145,6 +156,10 @@ header{
 
 .note-content{
     grid-area: content;
+}
+
+.note-content .edit-off {
+    white-space: pre-wrap;
 }
 
 .note-button{
@@ -174,13 +189,17 @@ header{
     content: "★";
 }
 
+.hidden {
+    display: none;
+}
+
 @media all and (max-width: 600px) {
-    .notes { flex: 2 0px; }
-    .notes { order: 1; }
-    .footer  { order: 2; }
+
+    .notes{
+        padding: 5px;
+    }
 
     .note {
-        margin: 0 0 40px 0;
         grid-template-columns: 1fr;
         grid-template-rows: 2em 2em 2em 1fr 19px;
         grid-template-areas: 

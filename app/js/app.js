@@ -1,15 +1,29 @@
 import {default as model} from "./model.js";
 
 ; (function () {
+    let notesTemplate = document.getElementById('notes-template').innerText;
+    let noteTemplate = document.getElementById("note-template").innerText;
+    let cssTemplate = document.getElementById("css-template").innerText;
+
+    let notesList = document.getElementById("notes-list");
+    let style = document.getElementById("style");
+
+    let notesVm;
+
     function init() {
         changeStyle(model.config.style);
-        document.getElementById("style-selector").value = model.config.style;
+        let styleSelector = document.getElementById("style-selector");
+        styleSelector.addEventListener("change", (event) => changeStyle(event.target.value))
+        styleSelector.value = model.config.style;
+
         document.getElementById("btn-sort-" + model.config.sort).className = "active";
-        document.getElementById("style-selector").addEventListener("change", (event) => changeStyle(event.target.value))
         document.addEventListener("click", (event) => handleClick(event));
 
         if (model.config.showFinished) document.getElementById("btn-showFinished").className += " active";
-        updateVm();
+
+        Handlebars.registerPartial("note", noteTemplate);
+        createNoteContainers();
+        renderNotes();
     }
     init();  
 
@@ -59,70 +73,84 @@ import {default as model} from "./model.js";
 
     function toggleFinished(noteId) {
         model.toggleFinished(noteId);
-        render(model.notes);
+        model.config.showFinished || toggleHide(`#note-${noteId}`); // TODO maybe fade out?
+        renderNotes();
     }
 
     function toggleShowFinished() {
-        // TODO: make finished look like: todo 'in for days' and done 'a year ago'
+        // TODO: make finished looklike: todo 'in for days' and done 'a year ago'
         model.toggleShowFinished();
         document.getElementById("btn-showFinished").classList.toggle("active");
-        updateVm();
+        renderNotes();
     }
 
     function sortBy(sortType) {
         document.getElementById("btn-sort-" + model.config.sort).className = "";
         model.setSortType(sortType);
         document.getElementById("btn-sort-" + sortType).className = "active";
-        updateVm();
+        renderNotes();
     }
 
     function createNote(){
-        model.createNote();
-        render(model.notes);
+        model.createNote(); // TODO return created note from model, add it to the DOM, focus element
+        createNoteContainers();
+        renderNotes();
     }
 
     function deleteNote(noteId){
         model.deleteNote(noteId);
-        render(model.notes);
+        createNoteContainers();
+        renderNotes();
     }
 
     function saveNote(noteId){
-        let title = document.querySelector(`.note-${noteId} #note-title`).value;
-        let content = document.querySelector(`.note-${noteId} #note-content`).value;
-        let finishDate = document.querySelector(`.note-${noteId} #note-finishDate`).value;
+        let title = document.querySelector(`#note-${noteId} #note-title`).value;
+        let content = document.querySelector(`#note-${noteId} #note-content`).value;
+        let finishDate = document.querySelector(`#note-${noteId} #note-finishDate`).value;
         model.saveNote(noteId, title, content, finishDate);
         toggleEdit(noteId);
-        render(model.notes);
+        renderNotes();
     }
 
     function toggleEdit(noteId){
-        toggleHide(noteId, "edit-off");
-        toggleHide(noteId, "edit-on");
+        toggleHide(`#note-${noteId} .edit-off`);
+        toggleHide(`#note-${noteId} .edit-on`);
+        positionNotes();
     }
 
-    function toggleHide(noteId, clazz){
-        Array.from(document.querySelectorAll(`.note-${noteId} .${clazz}`), (ele) => ele.classList.toggle('hidden'));
+    function toggleHide(selector){
+        Array.from(document.querySelectorAll(selector), (ele) => ele.classList.toggle('hidden'));
     }
 
     function rate(noteId, importance) {
         model.setImportance(noteId, importance)
-        render(model.notes);
+        renderNotes();
     }
 
     /**
      * VIEW
      */
-    function updateVm() {
-        let notesVm = model.config.showFinished ? model.notes : model.notes.filter((note) => { return !note.finished; });
-        notesVm = notesVm.sort((a, b) => {
-            return a[model.config.sort] > b[model.config.sort];
-        });
-        render(notesVm);
+    function sortNotes(a, b) {
+        let sort = model.config.sort;
+        return sort === "finishDate" ? a[sort] > b[sort] : a[sort] < b[sort];
     }
 
-    function render(notesVm) {
-        let notesTemplateText = document.getElementById("notesTemplate").textContent;
-        let notesHtml = Handlebars.compile(notesTemplateText);
-        document.getElementById("notes-content").innerHTML = notesHtml({ notes: notesVm });
+    function createNoteContainers(){
+        notesVm = model.notes;
+        notesList.innerHTML = Handlebars.compile(notesTemplate)(notesVm);
+    }
+
+    function renderNotes() {
+        notesVm.sort(sortNotes).forEach(function (note, index) {
+            let li = document.getElementById('note-' + note.id);
+            let hidden = !model.config.showFinished && note.finished ? "hidden" : "";
+            li.className = `note index-${index} ${hidden}`;
+            li.innerHTML = Handlebars.compile(noteTemplate)(note);
+        })
+        positionNotes()
+    }
+
+    function positionNotes() {
+        style.innerHTML = Handlebars.compile(cssTemplate)(model.notes);
     }
 })();
