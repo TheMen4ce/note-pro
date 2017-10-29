@@ -18,14 +18,8 @@ cd cas-fee_01
 npm i
 ```
 
-## Webserver starten
+## Client und Server starten
 
 ```bash
 npm start
 ```
-
-Im Browser unter http://localhost:3000 erreichbar.
-
-## Notes
-
-http://jsfiddle.net/496c9/ star toggler
