@@ -71,8 +71,7 @@ import {default as model} from "./model.js";
     function toggleFinished(noteId) {
         let note = findById(noteId);
         note.finished = !note.finished;
-        model.updateNote(note).then((updatedNote) => {
-            note = updatedNote;
+        model.updateNote(note).then(() => {
             model.config.showFinished || toggleHide(`#note-${noteId}`);
             sortAndRenderNotes();
         });
@@ -94,7 +93,7 @@ import {default as model} from "./model.js";
     function createNote() {
         model.createNote().then((newNote) => {
             notesVm.unshift(newNote);
-            renderNewNote(note);
+            renderNewNote(newNote);
             toggleEdit(newNote._id);
             let title = document.querySelector(`#note-${newNote._id} #note-title`);
             title.focus();
@@ -115,8 +114,7 @@ import {default as model} from "./model.js";
         note.content = document.querySelector(`#note-${noteId} #note-content`).value;
         note.finishDate = document.querySelector(`#note-${noteId} #note-finishDate`).value;
 
-        model.updateNote(note).then((updatedNote) => {
-            note = updatedNote;
+        model.updateNote(note).then(() => {
             toggleEdit(noteId);
             sortAndRenderNotes();
         });
@@ -135,8 +133,7 @@ import {default as model} from "./model.js";
     function rate(noteId, importance) {
         let note = findById(noteId);
         note.importance = importance;
-        model.updateNote(note).then((updatedNote) => {
-            note = updatedNote;
+        model.updateNote(note).then(() => {
             sortAndRenderNotes();
         });
     }
@@ -169,22 +166,18 @@ import {default as model} from "./model.js";
     }
 
     function sortAndRenderNotes() {
-        notesVm.sort(sortNotes);
+        notesVm = notesVm.sort(sortNotes);
         renderNotes();
     }
 
     function renderNotes(){
         notesVm.forEach(function (note, index) {
             let li = document.getElementById('note-' + note._id);
-            renderNote(li, note, index);
+            let hidden = !model.config.showFinished && note.finished ? "hidden" : "";
+            li.className = `note index-${index} ${hidden}`;
+            li.innerHTML = Handlebars.compile(noteTemplate)(note);
         });
         positionNotes()
-    }
-
-    function renderNote(ele, note, index){
-        let hidden = !model.config.showFinished && note.finished ? "hidden" : "";
-        ele.className = `note index-${index} ${hidden}`;
-        ele.innerHTML = Handlebars.compile(noteTemplate)(note);
     }
 
     function renderNewNote(note) {

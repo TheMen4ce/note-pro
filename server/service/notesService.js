@@ -4,7 +4,7 @@ const db = new Datastore({ filename: '../data/notes.db', autoload: true });
 class Note {
     constructor(title,content){
         this.finished = false;
-        this.importance = 3;
+        this.importance = "3";
         this.title = title;
         this.content = content;
         this.finishDate = new Date();
