@@ -1,5 +1,4 @@
 let notePro = localStorage.notePro ? JSON.parse(localStorage.notePro) : {};
-let baseUrl = "http://127.0.0.1:5000/";
 
 /**
  * CONFIG
@@ -17,7 +16,7 @@ function saveConfig(config) {
  * NOTES
  */
 function getAllNotes() {
-    return fetch(baseUrl + "notes")
+    return fetch("notes")
         .then((resp) => resp.json())
         .then((data) => {
             return data;
@@ -35,7 +34,7 @@ function updateNote(note) {
         }
     };
 
-    return fetch(baseUrl + "notes/" + note._id, fetchData)
+    return fetch("notes/" + note._id, fetchData)
         .then((resp) => resp.json())
         .then((data) => {
             return data;
@@ -52,7 +51,7 @@ function createNote() {
         }
     };
 
-    return fetch(baseUrl + "notes", fetchData)
+    return fetch("notes", fetchData)
         .then((resp) => resp.json())
         .then((data) => {
             return data;
@@ -61,7 +60,7 @@ function createNote() {
 
 
 function deleteNote(noteId) {
-    return fetch(baseUrl + "notes/" + noteId, {method: "DELETE"})
+    return fetch("notes/" + noteId, {method: "DELETE"})
         .then((resp) => resp.json())
         .then((data) => {
             return data;
