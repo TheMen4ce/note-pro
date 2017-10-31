@@ -18,7 +18,7 @@ cd cas-fee_01
 npm i
 ```
 
-## Client und Server starten
+## Server starten
 
 ```bash
 npm start
