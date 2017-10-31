@@ -48,6 +48,8 @@ import {default as model} from "./model.js";
                 createNote();
                 break;
             case "btn-cancel":
+                toggleEdit(event.target.dataset.noteId);
+                break;
             case "btn-edit":
                 toggleEdit(event.target.dataset.noteId);
                 focusEditedNote(event.target.dataset.noteId);
