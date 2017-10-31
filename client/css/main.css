@@ -132,7 +132,7 @@ header{
 
     position: absolute;
     width: calc(100% - 20px);
-    transition: transform 2s ease-out
+    transition: transform 1s ease-out
 }
 
 .note > * {

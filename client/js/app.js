@@ -50,6 +50,7 @@ import {default as model} from "./model.js";
             case "btn-cancel":
             case "btn-edit":
                 toggleEdit(event.target.dataset.noteId);
+                focusEditedNote(event.target.dataset.noteId);
                 break;
             case "btn-save":
                 saveNote(event.target.dataset.noteId);
@@ -95,15 +96,13 @@ import {default as model} from "./model.js";
             notesVm.unshift(newNote);
             renderNewNote(newNote);
             toggleEdit(newNote._id);
-            let title = document.querySelector(`#note-${newNote._id} #note-title`);
-            title.focus();
-            title.select();
+            focusEditedNote(newNote._id);
         });
     }
 
     function deleteNote(noteId) {
         model.deleteNote(noteId).then(() => {
-            notesVm.splice(notesVm.indexOf(findById(noteId)),1);
+            notesVm.splice(notesVm.indexOf(findById(noteId)), 1);
             renderAll();
         });
     }
@@ -118,16 +117,6 @@ import {default as model} from "./model.js";
             toggleEdit(noteId);
             sortAndRenderNotes();
         });
-    }
-
-    function toggleEdit(noteId) {
-        toggleHide(`#note-${noteId} .edit-off`);
-        toggleHide(`#note-${noteId} .edit-on`);
-        positionNotes();
-    }
-
-    function toggleHide(selector) {
-        Array.from(document.querySelectorAll(selector), (ele) => ele.classList.toggle('hidden'));
     }
 
     function rate(noteId, importance) {
@@ -148,6 +137,22 @@ import {default as model} from "./model.js";
     /**
      * VIEW
      */
+    function toggleEdit(noteId) {
+        toggleHide(`#note-${noteId} .edit-off`);
+        toggleHide(`#note-${noteId} .edit-on`);
+        positionNotes();
+    }
+
+    function toggleHide(selector) {
+        Array.from(document.querySelectorAll(selector), (ele) => ele.classList.toggle('hidden'));
+    }
+
+    function focusEditedNote(noteId) {
+        let title = document.querySelector(`#note-${noteId} #note-title`);
+        title.focus();
+        title.select();
+    }
+
     function sortNotes(a, b) {
         let sort = model.config.sort;
         return sort === "finishDate" ? a[sort] > b[sort] : a[sort] < b[sort];
@@ -170,7 +175,7 @@ import {default as model} from "./model.js";
         renderNotes();
     }
 
-    function renderNotes(){
+    function renderNotes() {
         notesVm.forEach(function (note, index) {
             let li = document.getElementById('note-' + note._id);
             let hidden = !model.config.showFinished && note.finished ? "hidden" : "";
@@ -182,7 +187,7 @@ import {default as model} from "./model.js";
 
     function renderNewNote(note) {
         let li = document.createElement("li");
-        li.setAttribute("id", "note-"+note._id);
+        li.setAttribute("id", "note-" + note._id);
         document.getElementById("notes-list").appendChild(li);
         renderNotes();
     }
