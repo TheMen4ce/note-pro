@@ -1,5 +1,5 @@
 const Datastore = require('nedb');
-const db = new Datastore({ filename: '../data/notes.db', autoload: true });
+const db = new Datastore({ filename: './data/notes.db', autoload: true });
 
 class Note {
     constructor(title,content){
