@@ -15,8 +15,7 @@
     "express": "^4.12.4",
     "method-override": "^2.3.3",
     "nedb": "^1.8.0",
-    "handlebars": "^4.0.10",
-    "moment": "^2.18.1"
+    "handlebars": "^4.0.10"
   },
   "scripts": {
     "start": "node index.js"

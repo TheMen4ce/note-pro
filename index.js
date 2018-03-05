@@ -14,5 +14,5 @@ app.use(require("method-override")(function (req) {
 app.use(require('./server/routes/notesRoutes.js'));
 app.use(express.static(__dirname + '/public'));
 
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 4000;
 app.listen(port, () => { console.log(`Server running at http://localhost:${port}/`); });
