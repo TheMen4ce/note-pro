@@ -1,11 +1,12 @@
-# Notes Pro
+# Note Pro
 
 * *Datum*: 24. September 2017
 * *Author:* [Dennis Briner](https://github.com/TheMen4ce)
 
-Projekt 1 des CAS FEE.
+## Demo
+https://note-pro.herokuapp.com/
 
-## Aufsetzen
+## Setup
 
 ```bash
 # Repo klonen
@@ -18,7 +19,7 @@ cd cas-fee_01
 npm i
 ```
 
-## Server starten
+## Start Application and Server
 
 ```bash
 npm start
