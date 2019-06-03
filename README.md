@@ -4,8 +4,10 @@
 * *Author:* [Dennis Briner](https://github.com/TheMen4ce)
 
 A simple note application.
-Backend: node / express
+Backend: node / express / NeDB
 Frontend: plain HTML/CSS/JS, handlebars as template engine, no frameworks!
+
+Things might be a little a little messy in the frontend. This is due to the limitation of libraries/frameworks (by not using any) and the fancy visual sort mechanism.
 
 ## Demo
 https://note-pro.herokuapp.com/
