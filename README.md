@@ -16,10 +16,10 @@ https://note-pro.herokuapp.com/
 
 ```bash
 # Repo klonen
-git clone https://github.com/TheMen4ce/cas-fee_01.git
+git clone https://github.com/TheMen4ce/note-pro.git
 
 # In Verzeichnis wechseln
-cd cas-fee_01
+cd note-pro
 
 # NPM-Dependencies installieren (in package.json definiert)
 npm i
